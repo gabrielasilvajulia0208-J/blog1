@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechGlow Blog - Tendências e Código</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           VARIÁVEIS E DEFINIÇÕES GERAIS (Mobile-First)
+           ========================================================================== */
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151c2e;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            /* Requisito: Gradientes Lineares, Radiais e Múltiplos */
+            --grad-horizontal: linear-gradient(90deg, #6366f1, #a855f7);
+            --grad-vertical: linear-gradient(180deg, #1e1b4b, #0b0f19);
+            --grad-text: linear-gradient(135deg, #60a5fa, #e879f9);
+            --grad-radial: radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15), transparent 50%);
+            --grad-multiple: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15), transparent 40%),
+                             radial-gradient(circle at 90% 80%, rgba(232, 121, 249, 0.1), transparent 40%);
+
+            --font-title: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --transition-fast: all 0.3s ease;
+            --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: var(--grad-multiple); /* Múltiplos gradientes no fundo */
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================================================
+           HEADER (Flexbox)
+           ========================================================================== */
+        .main-header {
+            background-color: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.2rem;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        /* Requisito: Gradiente no texto */
+        .logo span {
+            background: var(--grad-text);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        /* ==========================================================================
+           HERO SECTION (Overlay e Gradientes)
+           ========================================================================== */
+        .hero-section {
+            position: relative;
+            padding: 5rem 5%;
+            text-align: center;
+            background: var(--grad-vertical); /* Gradiente vertical */
+            overflow: hidden;
+        }
+
+        /* Requisito: Gradiente sutil no overlay */
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--grad-radial); /* Gradiente radial */
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #a5b4fc;
+        }
+
+        .hero-title {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            margin: 1.5rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        /* Requisito: Gradiente no botão e mudança no hover */
+        .btn-primary {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--grad-horizontal);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+            filter: brightness(1.1);
+        }
+
+        /* ==========================================================================
+           LAYOUT PRINCIPAL E SEÇÕES (Mobile-First)
+           ========================================================================== */
+        .main-layout {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .section-title {
+            font-family: var(--font-title);
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 50px; height: 3px;
+            background: var(--grad-horizontal);
+            border-radius: 2px;
+        }
+
+        /* --- Seção de Destaques (Flexbox) --- */
+        .featured-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card-featured {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-fast);
+        }
+
+        /* Requisito: Gradiente sutil na borda do card */
+        .card-gradient-border {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--grad-horizontal);
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #a855f7;
+            letter-spacing: 1px;
+        }
+
+        .card-content h3 {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .card-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        .card-link:hover {
+            padding-left: 5px;
+            color: #e879f9;
+        }
+
+        .card-featured:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        /* --- Seção de Posts Recentes (Grid) --- */
+        .recent-section {
+            margin-top: 3rem;
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .card-recent {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition-fast);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .recent-img-placeholder {
+            height: 180px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            transition: var(--transition-fast);
+        }
+
+        .recent-content {
+            padding: 1.5rem;
+        }
+
+        .recent-content h3 {
+            font-family: var(--font-title);
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .recent-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .card-recent:hover {
+            transform: scale(1.02);
+        }
+
+        /* Requisito: Gradiente que muda no hover */
+        .card-recent:hover .recent-img-placeholder {
+            background: linear-gradient(135deg, #312e81, #4c1d95);
+        }
+
+        /* ==========================================================================
+           SIDEBAR (Flexbox e Elementos)
+           ========================================================================== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .widget {
+            background: var(--bg-card);
+            padding: 1.8rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .widget h3 {
+            font-family: var(--font-title);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.5rem;
+        }
+
+        .author-widget {
+            text-align: center;
+        }
+
+        .author-widget .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: var(--grad-horizontal);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .categories-widget ul {
+            list-style: none;
+        }
+
+        .categories-widget li {
+            margin-bottom: 0.8rem;
+        }
+
+        .categories-widget a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: var(--transition-fast);
+        }
+
+        .categories-widget a:hover {
+            color: #a855f7;
+            padding-left: 3px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.8rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.2);
+            color: #fff;
+            font-family: var(--font-body);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: #a855f7;
+        }
+
+        .btn-submit {
+            padding: 0.8rem;
+            background: var(--grad-horizontal);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .btn-submit:hover {
+            filter: brightness(1.2);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        .main-footer {
+            background: #070a12;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ==========================================================================
+           MEDIA QUERIES (Responsividade)
+           ========================================================================== */
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 1.5rem 0;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .featured-cards {
+                flex-direction: row;
+            }
+
+            .card-featured {
+                flex: 1;
+            }
+
+            .recent-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 2.5fr 1fr;
+            }
+
+            .recent-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#" class="logo">Tech<span>Glow</span></a>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link">Início</a>
+                <a href="#" class="nav-link">Artigos</a>
+                <a href="#" class="nav-link">Sobre</a>
+                <a href="#" class="nav-link">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-tag">Destaque da Semana</span>
+            <h1 class="hero-title">O Futuro do Design Web com Múltiplos Gradientes</h1>
+            <p class="hero-text">Descubra como a combinação de CSS Grid, Flexbox e gradientes modernos pode transformar a experiência visual do seu usuário.</p>
+            <a href="#" class="btn-primary">Ler Artigo Completo</a>
+        </div>
+    </section>
+
+    <div class="main-layout container">
+        
+        <main class="content-area">
+            <section class="featured-section">
+                <h2 class="section-title">Posts em Destaque</h2>
+                <div class="featured-cards">
+                    <article class="card-featured">
+                        <div class="card-gradient-border"></div>
+                        <div class="card-content">
+                            <span class="card-category">CSS Avançado</span>
+                            <h3>Dominando Background-Clip</h3>
+                            <p>Aprenda a aplicar gradientes incríveis diretamente nos textos do seu site de forma simples.</p>
+                            <a href="#" class="card-link">Saber mais →</a>
+                        </div>
+                    </article>
+
+                    <article class="card-featured">
+                        <div class="card-gradient-border"></div>
+                        <div class="card-content">
+                            <span class="card-category">UI/UX Design</span>
+                            <h3>Gradientes Radiais na Prática</h3>
+                            <p>Como criar iluminações de fundo e efeitos de profundidade realistas usando apenas CSS puro.</p>
+                            <a href="#" class="card-link">Saber mais →</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="recent-section">
+                <h2 class="section-title">Posts Recentes</h2>
+                <div class="recent-grid">
+                    <article class="card-recent">
+                        <div class="recent-img-placeholder"></div>
+                        <div class="recent-content">
+                            <span class="card-category">Carreira</span>
+                            <h3>Guia do Desenvolvedor Front-End</h3>
+                            <p>As principais ferramentas e metodologias que estão moldando o mercado web atual.</p>
+                        </div>
+                    </article>
+                    <article class="card-recent">
+                        <div class="recent-img-placeholder"></div>
+                        <div class="recent-content">
+                            <span class="card-category">Performance</span>
+                            <h3>Otimização de Performance Web</h3>
+                            <p>Como manter seu código CSS leve e garantir carregamentos abaixo de um segundo.</p>
+                        </div>
+                    </article>
+                    <article class="card-recent">
+                        <div class="recent-img-placeholder"></div>
+                        <div class="recent-content">
+                            <span class="card-category">Acessibilidade</span>
+                            <h3>Cores, Contrastes e Acessibilidade</h3>
+                            <p>Garantindo que seus gradientes e escolhas de design sejam inclusivos para todos.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <div class="widget author-widget">
+                <div class="avatar"></div>
+                <h3>Sobre a Autora</h3>
+                <p>Olá! Sou a Clara, desenvolvedora Front-end e entusiasta de interfaces criativas e interativas.</p>
+            </div>
+
+            <div class="widget categories-widget">
+                <h3>Categorias</h3>
+                <ul>
+                    <li><a href="#">Desenvolvimento Web <span>(12)</span></a></li>
+                    <li><a href="#">UI/UX Design <span>(8)</span></a></li>
+                    <li><a href="#">Novidades & Tendências <span>(5)</span></a></li>
+                </ul>
+            </div>
+
+            <div class="widget newsletter-widget">
+                <h3>Newsletter</h3>
+                <p>Fique por dentro de todas as novidades semanais diretamente no seu e-mail.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" class="btn-submit">Inscrever</button>
+                </form>
+            </div>
+        </aside>
+
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 TechGlow Blog. Desenvolvido com foco em CSS Moderno.</p>
+    </footer>
+
+</body>
+</html>
